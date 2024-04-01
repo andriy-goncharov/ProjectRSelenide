@@ -15,11 +15,11 @@ import static com.codeborne.selenide.Configuration.browser;
 
 public class BaseTest {
     @BeforeMethod
-//    @Parameters("browser")
-    public void setUp() {
+    @Parameters("browser")
+    public void setUp(String browser) {
         Configuration.timeout = Duration.ofSeconds(10).toMillis();
         Configuration.baseUrl = "https://auto.ria.com";
-        selectBrowser("firefox");
+        selectBrowser(browser);
     }
 
     @AfterMethod
