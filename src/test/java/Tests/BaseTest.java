@@ -20,7 +20,6 @@ public class BaseTest {
         Configuration.timeout = Duration.ofSeconds(10).toMillis();
         Configuration.baseUrl = "https://auto.ria.com";
         selectBrowser("firefox");
-
     }
 
     @AfterMethod

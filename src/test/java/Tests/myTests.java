@@ -13,7 +13,7 @@ public class myTests extends BaseTest {
     private static final String MODEL_AUTO = "Vitara";
 
     @Test( description = "Test#1:")
-    public void inputVehiclecharacteristics() {
+    public void sendRewiew() {
         open("/uk/reviews/add.html");
         ReviewPage.getInstance().inputVehiclecharacteristics(MARKA_AUTO, MODEL_AUTO);
         assertThat(ReviewPage.getInstance().inputYourFeedback().text()).contains(MARKA_AUTO, MODEL_AUTO);
