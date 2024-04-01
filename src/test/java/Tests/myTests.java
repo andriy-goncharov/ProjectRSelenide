@@ -5,17 +5,24 @@ import Pages.ReviewPage;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class Tests extends BaseTest{
-    @Test
+
+public class myTests extends BaseTest {
+    private static final String MARKA_AUTO = "Suzuki";
+    private static final String MODEL_AUTO = "Vitara";
+
+    @Test( description = "Test#1:")
     public void inputVehiclecharacteristics() {
-        open("/reviews/add.html");
-        ReviewPage.getInstance().inputVehiclecharacteristics("Легковые");
+        open("/uk/reviews/add.html");
+        ReviewPage.getInstance().inputVehiclecharacteristics(MARKA_AUTO, MODEL_AUTO);
+        assertThat(ReviewPage.getInstance().inputYourFeedback().text()).contains(MARKA_AUTO, MODEL_AUTO);
     }
-    @Test
-    public void testCalc(){
+
+    @Test( description = "Test#2:  ")
+    public void testCalc() {
         open("/uk/rastamozhka-avto/calculator/");
-        CalculatorPage.getInstance().calculation();
+        assertThat(CalculatorPage.getInstance().calculation()).isEqualTo("4649 €");
     }
 
 }
