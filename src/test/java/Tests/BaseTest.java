@@ -1,26 +1,30 @@
 package Tests;
-
-
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Configuration.browser;
 
 public class BaseTest {
+    @BeforeClass
+    public void report(){
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true));
+    }
     @BeforeMethod
-    @Parameters("browser")
-    public void setUp(String browser) {
+//    @Parameters("browser")
+    public void setUp() {
         Configuration.timeout = Duration.ofSeconds(10).toMillis();
         Configuration.baseUrl = "https://auto.ria.com";
-        selectBrowser(browser);
+        selectBrowser("chrome");
     }
+
 
     @AfterMethod
     public void tearDown() {
