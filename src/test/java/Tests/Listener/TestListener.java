@@ -22,7 +22,7 @@ public class TestListener implements ITestListener, StepLifecycleListener, TestL
         makeScreenshot();
     }
 
-    @Attachment(type = "image/png")
+    @Attachment(type = "image/png", fileExtension = ".png")
     private byte[] makeScreenshot() {
         return screenshot(OutputType.BYTES);
     }

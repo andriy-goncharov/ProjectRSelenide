@@ -1,5 +1,6 @@
 package Tests;
 
+import Tests.Listener.TestListener;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -11,13 +12,9 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Configuration.browser;
 
+
 public class BaseTest {
-    @BeforeClass
-    public void report() {
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(true));
-    }
+
 
     @BeforeMethod
     @Parameters("browser")
@@ -45,7 +42,7 @@ public class BaseTest {
 
     private void selectBrowser(String browserName) {
         switch (browserName.toLowerCase()) {
-            case "chromium":
+            case "chrome":
                 Configuration.browser = "chrome";
                 break;
             case "firefox":

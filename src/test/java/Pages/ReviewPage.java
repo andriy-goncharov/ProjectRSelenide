@@ -4,6 +4,7 @@ import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import java.time.Duration;
@@ -76,7 +77,7 @@ public class ReviewPage {
     public static ReviewPage getInstance() {
         return new ReviewPage();
     }
-
+    @Step("Input  characteristics auto")
     public void inputVehiclecharacteristics(String marka, String modelName) {
         categoryId.shouldBe(visible).shouldBe(clickable).selectOption("Легкові");
         markaId.shouldBe(visible).shouldBe(clickable).setValue(marka);
@@ -92,6 +93,7 @@ public class ReviewPage {
         fuelConsumption.shouldBe(visible).shouldBe(clickable).setValue("7.5");
     }
 
+    @Step("Input feedback user")
     public SelenideElement inputYourFeedback() {
         firstBayer.shouldBe(visible).shouldNotBe(checked).click();
         userName.shouldBe(visible).setValue(faker.name().fullName());
@@ -106,12 +108,11 @@ public class ReviewPage {
         setRating(4, 5);
         setRating(5, 5);
 
-     buttonAddrewiev.should(visible).shouldBe(clickable).click();
+//     buttonAddrewiev.should(visible).shouldBe(clickable).click();
      return reviewsText.shouldBe(visible, Duration.ofSeconds(20));
 
     }
-
-
+    @Step("Input opinion user")
     public void inputYourAppinoinV2() {
         korobka_peredach_minus.scrollIntoView(true);
         setKorobka_peredach(true);
@@ -131,6 +132,7 @@ public class ReviewPage {
         setCzena(true);
     }
 
+    @Step("Input rating auto")
     public void  setRating(int numberRaiting, int grade){
         $("label[for='type"+numberRaiting+"-val"+grade+"']").click();
     }

@@ -2,12 +2,14 @@ package Tests;
 
 import Pages.CalculatorPage;
 import Pages.ReviewPage;
+import Tests.Listener.TestListener;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Listeners(TestListener.class)
 public class myTests extends BaseTest {
     private static final String MARKA_AUTO = "Suzuki";
     private static final String MODEL_AUTO = "Vitara";
