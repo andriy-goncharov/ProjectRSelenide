@@ -1,11 +1,8 @@
 package Pages;
 
-import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.github.javafaker.Faker;
-import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 
 import java.time.Duration;
 
@@ -64,12 +61,14 @@ public class ReviewPage {
     private SelenideElement czena_plus = $("label[data-gaq='czena_plus']");
     private ElementsCollection plusAndMinus = $$x("//div[@class='item ']");
     
-    private SelenideElement buttonAddrewiev = $("input[type='submit']");
+    private SelenideElement btnAddrewiev = $("input[type='submit']");
 
     private SelenideElement addFoto = $x("//span[@class='label-upload-foto']");
 
     public SelenideElement reviewsText = $("h3[class$='mob'] a[data-gaq*='reviews']");
     Faker faker = new Faker();
+
+    public SelenideElement btnCookie = $x("//label[contains(@class, 'notifier')]");
 
 
 
@@ -77,8 +76,9 @@ public class ReviewPage {
     public static ReviewPage getInstance() {
         return new ReviewPage();
     }
-    @Step("Input  characteristics auto")
+
     public void inputVehiclecharacteristics(String marka, String modelName) {
+        btnCookie.shouldBe(visible).shouldBe(clickable).click();
         categoryId.shouldBe(visible).shouldBe(clickable).selectOption("Легкові");
         markaId.shouldBe(visible).shouldBe(clickable).setValue(marka);
         autoColletion.find(innerText(marka)).click();
@@ -93,7 +93,6 @@ public class ReviewPage {
         fuelConsumption.shouldBe(visible).shouldBe(clickable).setValue("7.5");
     }
 
-    @Step("Input feedback user")
     public SelenideElement inputYourFeedback() {
         firstBayer.shouldBe(visible).shouldNotBe(checked).click();
         userName.shouldBe(visible).setValue(faker.name().fullName());
@@ -101,19 +100,20 @@ public class ReviewPage {
         timeOwning.shouldBe(visible).shouldBe(clickable).selectOption(5);
         usingType.shouldBe(visible).shouldBe(clickable).selectOption("Сім'я");
         textReview.shouldBe(visible).shouldBe(clickable).setValue(faker.lorem().paragraph(5));
-           inputYourAppinoinV2();
+        inputYourOpinion();
         setRating(1, 4);
         setRating(2, 5);
         setRating(3, 5);
         setRating(4, 5);
         setRating(5, 5);
 
-     buttonAddrewiev.should(visible).shouldBe(clickable).click();
+     btnAddrewiev.should(visible).shouldBe(clickable).click();
      return reviewsText.shouldBe(visible, Duration.ofSeconds(20));
 
     }
-    @Step("Input opinion user")
-    public void inputYourAppinoinV2() {
+
+
+    public void inputYourOpinion() {
         korobka_peredach_minus.scrollIntoView(true);
         setKorobka_peredach(true);
         setRaskhod_topliva(true);
@@ -132,7 +132,6 @@ public class ReviewPage {
         setCzena(true);
     }
 
-    @Step("Input rating auto")
     public void  setRating(int numberRaiting, int grade){
         $("label[for='type"+numberRaiting+"-val"+grade+"']").click();
     }
