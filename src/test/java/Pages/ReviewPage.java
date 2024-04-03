@@ -108,7 +108,7 @@ public class ReviewPage {
         setRating(4, 5);
         setRating(5, 5);
 
-//     buttonAddrewiev.should(visible).shouldBe(clickable).click();
+     buttonAddrewiev.should(visible).shouldBe(clickable).click();
      return reviewsText.shouldBe(visible, Duration.ofSeconds(20));
 
     }
