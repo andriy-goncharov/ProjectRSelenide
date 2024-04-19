@@ -3,6 +3,7 @@ package Tests;
 import Tests.Listener.TestListener;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.testng.ITestContext;
@@ -15,29 +16,32 @@ import static com.codeborne.selenide.Configuration.browser;
 
 public class BaseTest {
 
-
-    @BeforeMethod
-    @Parameters("browser")
-    public void setUp() {
-        Configuration.timeout = Duration.ofSeconds(10).toMillis();
-        Configuration.baseUrl = "https://auto.ria.com";
-        selectBrowser("chrome");
-    }
-
-
-    @AfterMethod
-    public void tearDown() {
-        Selenide.closeWebDriver();
-    }
-
-
-    @DataProvider(name = "browser")
+    @BeforeClass
+//    @DataProvider(name = "browser")
     public Object[][] getData(ITestContext context) {
         String browserName = System.getProperty("browser");
         return new Object[][]{
                 {browserName}
         };
     }
+
+    @BeforeMethod
+    public void setUp() {
+        Configuration.timeout = Duration.ofSeconds(10).toMillis();
+        Configuration.baseUrl = "https://auto.ria.com";
+        SelenideLogger.addListener("allure", new AllureSelenide());
+        selectBrowser("chrome");
+
+    }
+
+
+    @AfterMethod
+    public void tearDown() {
+        if (WebDriverRunner.getWebDriver() != null) {
+            Selenide.closeWebDriver();
+        }
+    }
+
 
 
     private void selectBrowser(String browserName) {
@@ -61,5 +65,4 @@ public class BaseTest {
                 throw new IllegalArgumentException("Invalid browser name");
         }
     }
-
 }

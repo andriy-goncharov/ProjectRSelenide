@@ -1,8 +1,13 @@
 package Pages;
 
+import Tests.commands.CustomSelectFromDropDown;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.commands.Commands;
+import com.codeborne.selenide.impl.WebElementSource;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Step;
+import org.testng.annotations.BeforeClass;
 
 import java.time.Duration;
 
@@ -60,26 +65,26 @@ public class ReviewPage {
     private SelenideElement czena_minus = $("label[data-gaq='czena_minus']");
     private SelenideElement czena_plus = $("label[data-gaq='czena_plus']");
     private ElementsCollection plusAndMinus = $$x("//div[@class='item ']");
-    
+
     private SelenideElement btnAddrewiev = $("input[type='submit']");
 
     private SelenideElement addFoto = $x("//span[@class='label-upload-foto']");
 
     public SelenideElement reviewsText = $("h3[class$='mob'] a[data-gaq*='reviews']");
-    Faker faker = new Faker();
-
     public SelenideElement btnCookie = $x("//label[contains(@class, 'notifier')]");
-
-
+    Faker faker = new Faker();
 
 
     public static ReviewPage getInstance() {
         return new ReviewPage();
     }
 
+    @Step("input vehicle data entry")
     public void inputVehiclecharacteristics(String marka, String modelName) {
         btnCookie.shouldBe(visible).shouldBe(clickable).click();
         categoryId.shouldBe(visible).shouldBe(clickable).selectOption("Легкові");
+//        WebElementSource myList = (WebElementSource) markaId.toWebElement();
+
         markaId.shouldBe(visible).shouldBe(clickable).setValue(marka);
         autoColletion.find(innerText(marka)).click();
         model.shouldBe(visible).shouldBe(clickable).setValue(modelName);
@@ -93,6 +98,7 @@ public class ReviewPage {
         fuelConsumption.shouldBe(visible).shouldBe(clickable).setValue("7.5");
     }
 
+    @Step("input feedback")
     public SelenideElement inputYourFeedback() {
         firstBayer.shouldBe(visible).shouldNotBe(checked).click();
         userName.shouldBe(visible).setValue(faker.name().fullName());
@@ -102,13 +108,14 @@ public class ReviewPage {
         textReview.shouldBe(visible).shouldBe(clickable).setValue(faker.lorem().paragraph(5));
         inputYourOpinion();
         setRating(1, 4);
-        setRating(2, 5);
-        setRating(3, 5);
-        setRating(4, 5);
-        setRating(5, 5);
 
-     btnAddrewiev.should(visible).shouldBe(clickable).click();
-     return reviewsText.shouldBe(visible, Duration.ofSeconds(20));
+        for (int i = 2; i <= 5; i++) {
+           setRating(i,5);
+        }
+
+
+//     btnAddrewiev.should(visible).shouldBe(clickable).click();
+        return reviewsText.shouldBe(visible, Duration.ofSeconds(20));
 
     }
 
@@ -132,8 +139,8 @@ public class ReviewPage {
         setCzena(true);
     }
 
-    public void  setRating(int numberRaiting, int grade){
-        $("label[for='type"+numberRaiting+"-val"+grade+"']").click();
+    public void setRating(int numberRaiting, int grade) {
+        $("label[for='type" + numberRaiting + "-val" + grade + "']").click();
     }
 
 
