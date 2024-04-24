@@ -9,14 +9,13 @@ import org.testng.annotations.Test;
 import static com.codeborne.selenide.Selenide.open;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Listeners(TestListener.class)
+//@Listeners(TestListener.class)
 public class myTests extends BaseTest {
     private static final String MARKA_AUTO = "Suzuki";
     private static final String MODEL_AUTO = "Vitara";
 
     @Test(description = "Test#1: відгук про авто")
     public void sendRewiew() {
-
         open("/uk/reviews/add.html");
         ReviewPage.getInstance().inputVehiclecharacteristics(MARKA_AUTO, MODEL_AUTO);
         assertThat(ReviewPage.getInstance().inputYourFeedback().text()).contains(MARKA_AUTO, MODEL_AUTO);

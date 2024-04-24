@@ -1,5 +1,6 @@
 package Tests;
 
+import Pages.CalculatorPage;
 import Tests.Listener.TestListener;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
@@ -11,11 +12,9 @@ import org.testng.annotations.*;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Configuration.browser;
 
 
 public class BaseTest {
-
     @BeforeClass
 //    @DataProvider(name = "browser")
     public Object[][] getData(ITestContext context) {
@@ -29,6 +28,7 @@ public class BaseTest {
     public void setUp() {
         Configuration.timeout = Duration.ofSeconds(10).toMillis();
         Configuration.baseUrl = "https://auto.ria.com";
+        Configuration.headless = true;
         SelenideLogger.addListener("allure", new AllureSelenide());
         selectBrowser("chrome");
 
