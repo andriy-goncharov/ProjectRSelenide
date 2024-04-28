@@ -30,7 +30,7 @@ public class BaseTest {
         Configuration.baseUrl = "https://auto.ria.com";
         SelenideLogger.addListener("allure", new AllureSelenide());
         selectBrowser("chrome");
-        Configuration.headless = false;
+        Configuration.headless = true;
 
     }
 
