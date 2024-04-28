@@ -28,9 +28,9 @@ public class BaseTest {
     public void setUp() {
         Configuration.timeout = Duration.ofSeconds(10).toMillis();
         Configuration.baseUrl = "https://auto.ria.com";
-        Configuration.headless = true;
         SelenideLogger.addListener("allure", new AllureSelenide());
         selectBrowser("chrome");
+        Configuration.headless = false;
 
     }
 
